@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#define ONE_SECOND F_CPU / 1024 - 1
+#define ONE_SECOND ((F_CPU / 1024UL) - 1UL)
 
 ISR(TIMER1_COMPA_vect)
 {
