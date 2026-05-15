@@ -22,7 +22,10 @@ read_fuse:
 	avrdude -c usbasp -p $(MCU) -U lfuse:r:-:h -U hfuse:r:-:h -U efuse:r:-:h
 
 clean:
-	rm -fr $(BUILDDIR)/*
+	rm -fr $(BUILDDIR)/
+
+builddir:
+	mkdir $(BUILDDIR)
 
 $(BUILDDIR)/$(PROJECT).hex: $(BUILDDIR)/$(PROJECT).elf
 	$(OBJCOPY) -j .text -j .data -O ihex --change-address=0x0000 $^ $@
@@ -30,5 +33,5 @@ $(BUILDDIR)/$(PROJECT).hex: $(BUILDDIR)/$(PROJECT).elf
 $(BUILDDIR)/$(PROJECT).elf: $(ALL_OBJS)
 	$(CC) $(CFLAGS) -o $@ $<
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.c
+$(BUILDDIR)/%.o: $(SRCDIR)/%.c | builddir
 	$(CC) $(CFLAGS) -c -o $@ $^
