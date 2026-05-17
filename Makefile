@@ -1,5 +1,5 @@
 MCU = atmega328p
-F_CPU = 16000000UL
+F_CPU = 1x000000UL
 
 SRCDIR = src
 BUILDDIR = build
@@ -25,7 +25,7 @@ clean:
 	rm -fr $(BUILDDIR)/
 
 builddir:
-	mkdir $(BUILDDIR)
+	mkdir -p $(BUILDDIR)
 
 $(BUILDDIR)/$(PROJECT).hex: $(BUILDDIR)/$(PROJECT).elf
 	$(OBJCOPY) -j .text -j .data -O ihex --change-address=0x0000 $^ $@
